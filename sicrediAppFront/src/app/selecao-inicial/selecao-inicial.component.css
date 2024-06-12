@@ -1,0 +1,15 @@
+.selecao-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .selecao-container h2 {
+    margin-bottom: 20px;
+  }
+  
+  .selecao-container button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  

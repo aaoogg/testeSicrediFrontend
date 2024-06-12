@@ -1,0 +1,14 @@
+<div>
+  <h2>Gerenciamento de Pautas</h2>
+  <input type="text" [(ngModel)]="newPauta" placeholder="Nova Pauta" />
+  <button (click)="cadastrarPauta()">Cadastrar Pauta</button>
+  
+  <div *ngFor="let pauta of pautas">
+    <h3>Pauta: {{ pauta.nome }}</h3>
+    <p>Votos Sim: {{ pauta.votosSim }}</p>
+    <p>Votos Não: {{ pauta.votosNao }}</p>
+    <button (click)="iniciarVotacao(pauta.id)" [disabled]="pauta.pautaEmVotacao || pauta.votacaoFinalizada">Iniciar Votação</button>
+    <button (click)="encerrarVotacao(pauta.id)" [disabled]="!pauta.pautaEmVotacao">Encerrar Votação</button>
+    <p *ngIf="pauta.votacaoFinalizada">Esta pauta já foi finalizada</p>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<!-- Para login -->
+<div *ngIf="!exibirCadastro">
+    <h2>Login de Votante</h2>
+    <input type="text" [(ngModel)]="usuario" placeholder="Usuário" /><br>
+    <input type="password" [(ngModel)]="senha" placeholder="Senha" /><br>
+    <button (click)="logar()">Logar</button>
+    <button (click)="irParaCadastro()">Cadastrar Votante</button>
+  </div>
+  
+  <!-- Para cadastro -->
+  <div *ngIf="exibirCadastro">
+    <h2>Cadastro de Votante</h2>
+    <input type="text" [(ngModel)]="usuarioCadastro" placeholder="Novo Usuário" /><br>
+    <input type="password" [(ngModel)]="senhaCadastro" placeholder="Senha" /><br>
+    <input type="password" [(ngModel)]="confirmarSenha" placeholder="Repita a Senha" /><br>
+    <button (click)="cadastrar()">Cadastrar</button>
+  </div>
+  

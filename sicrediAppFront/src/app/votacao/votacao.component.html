@@ -1,0 +1,16 @@
+<div>
+  <h2>Votação</h2>
+  <input type="number" [(ngModel)]="idPautaParaVotar" placeholder="ID da Pauta" />
+  <button (click)="buscarPauta()">Buscar Pauta</button>
+  
+  <div *ngIf="pautaSelecionada">
+    <h3>Pauta: {{ pautaSelecionada.nome }}</h3>
+    <p>Votos Sim: {{ pautaSelecionada.votosSim }}</p>
+    <p>Votos Não: {{ pautaSelecionada.votosNao }}</p>
+    <button (click)="votar(true)" [disabled]="!pautaSelecionada.pautaEmVotacao">Votar Sim</button>
+    <button (click)="votar(false)" [disabled]="!pautaSelecionada.pautaEmVotacao">Votar Não</button>
+  </div>
+  <div *ngIf="mensagem">
+    <p>{{ mensagem }}</p>
+  </div>
+</div>
