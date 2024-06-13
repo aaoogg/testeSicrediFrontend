@@ -11,8 +11,7 @@ const routes: Routes = [
   { path: 'votacao', component: VotacaoComponent },
   { path: 'cadastro-login', component: CadastroLoginComponent },
   { path: 'gerenciamento-pautas', component: GerenciamentoPautasComponent },
-  // Outras rotas
-  { path: '**', redirectTo: '/selecao-inicial' } // Rota padrão para redirecionar para a tela inicial
+  { path: '**', redirectTo: '/selecao-inicial' }
 ];
 
 @NgModule({
