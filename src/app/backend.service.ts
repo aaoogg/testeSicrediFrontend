@@ -16,6 +16,15 @@ export class BackendService {
     return this.http.get<any[]>(`${this.baseUrl}/pautas`);
   }
 
+  getPautaById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/pautas/${id}`);
+  }
+
+  votar(idPauta: number, voto: boolean, usuarioId: number): Observable<any> {
+    const votoData = { voto, usuarioId };
+    return this.http.post<any>(`${this.baseUrl}/pautas/${idPauta}/votar`, votoData);
+  }
+
   cadastrarPauta(nome: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/pautas`, { nome });
   }
@@ -28,17 +37,17 @@ export class BackendService {
     return this.http.post<void>(`${this.baseUrl}/pautas/${id}/encerrar-votacao`, {});
   }
 
-  votar(id: number, voto: boolean): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/pautas/${id}/votar`, { voto });
+  verificarVoto(idPauta: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/pautas/${idPauta}/verificarVoto`);
   }
-
-  // Exemplo de função para login de votante
+  
   login(usuario: string, senha: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/login`, { usuario, senha });
+    const body = { usuario, senha };
+    return this.http.post<any>(`${this.baseUrl}/usuarios/login`, body);
   }
 
   cadastrarUsuario(usuario: string, senha: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/usuarios`, { usuario, senha }); // Ajusta o endpoint para /api/usuarios
+    return this.http.post<any>(`${this.baseUrl}/usuarios/cadastrar`, { usuario, senha }); // Ajusta o endpoint para /api/usuarios
   }
 
   buscarUsuario(usuario: string): Observable<any> {

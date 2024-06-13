@@ -14,5 +14,8 @@
     <input type="password" [(ngModel)]="senhaCadastro" placeholder="Senha" /><br>
     <input type="password" [(ngModel)]="confirmarSenha" placeholder="Repita a Senha" /><br>
     <button (click)="cadastrar()">Cadastrar</button>
+    <div *ngIf="usuarioJaCadastrado" class="alert alert-danger">
+      Este usuário já está cadastrado.
+    </div>
   </div>
   

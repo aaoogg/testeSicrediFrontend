@@ -7,33 +7,63 @@ import { BackendService } from '../backend.service';
   styleUrls: ['./votacao.component.css']
 })
 export class VotacaoComponent {
-  pautas: any[] = [];
-  pautaSelecionada: any;
-  idPautaParaVotar: number = 0;
+  pauta: any = null;
   mensagem: string = '';
+  votoRegistrado: boolean = false;
+  idPautaParaVotar: number = 0;
 
   constructor(private backendService: BackendService) {}
 
-  buscarPauta() {
-    this.backendService.getPautas().subscribe(pautas => {
-      this.pautas = pautas;
-      this.pautaSelecionada = this.pautas.find(p => p.id === this.idPautaParaVotar);
-      if (!this.pautaSelecionada) {
+  buscarPautaById(idPauta: number) {
+    this.backendService.getPautaById(idPauta).subscribe(
+      response => {
+        this.pauta = response;
+        this.mensagem = ''; // Limpa mensagem de erro, se houver
+        this.verificarVoto(); // Verifica se o usuário já votou
+      },
+      error => {
         this.mensagem = 'Pauta não encontrada';
-      } else if (this.pautaSelecionada.votacaoFinalizada) {
-        this.mensagem = 'Esta pauta já foi finalizada';
+        this.pauta = null;
       }
-    });
+    );
   }
 
   votar(voto: boolean) {
-    if (this.pautaSelecionada && !this.pautaSelecionada.votacaoFinalizada && this.pautaSelecionada.pautaEmVotacao) {
-      this.backendService.votar(this.pautaSelecionada.id, voto).subscribe(() => {
-        this.mensagem = 'Voto registrado com sucesso';
-        this.buscarPauta(); // Atualizar a pauta após o voto
-      });
+    const usuarioLogado = Number(localStorage.getItem('usuarioLogado')); 
+    if (this.pauta && this.pauta.pautaEmVotacao && !this.votoRegistrado) {
+      this.backendService.votar(this.pauta.id, voto, usuarioLogado).subscribe(
+        () => {
+          this.mensagem = 'Voto registrado com sucesso';
+          this.verificarVoto();
+          this.votoRegistrado = true; // Marca o voto como registrado localmente
+        },
+        error => {
+          if (error.status === 201) {
+            this.mensagem = 'Voto registrado com sucesso';
+            this.verificarVoto();
+            this.votoRegistrado = true; // Marca o voto como registrado localmente
+          } else {
+            console.error('Erro ao registrar voto:', error);
+            this.mensagem = 'Erro ao registrar voto';
+          }
+        }
+      );
     } else {
       this.mensagem = 'Não é possível votar nesta pauta';
+    }
+  }
+  
+
+  verificarVoto() {
+    if (this.pauta) {
+      this.backendService.verificarVoto(this.pauta.id).subscribe(
+        response => {
+          this.votoRegistrado = response; // Se true, o usuário já votou nesta pauta
+        },
+        error => {
+          console.error('Erro ao verificar voto:', error);
+        }
+      );
     }
   }
 }

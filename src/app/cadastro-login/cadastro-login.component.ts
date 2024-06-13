@@ -15,6 +15,7 @@ export class CadastroLoginComponent {
   senhaCadastro: string = '';
   confirmarSenha: string = '';
   exibirCadastro: boolean = false;
+  usuarioJaCadastrado = false;
 
   constructor(private router: Router, private backendService: BackendService) {}
 
@@ -22,6 +23,7 @@ export class CadastroLoginComponent {
     this.backendService.login(this.usuario, this.senha).subscribe(
       response => {
         console.log('Login realizado com sucesso:', response);
+        localStorage.setItem('usuarioLogado', response.usuarioId.toString());
         // Lógica adicional após o login, como redirecionamento ou armazenamento do token de sessão
         this.router.navigate(['/votacao']); // Exemplo de redirecionamento após login
       },
@@ -37,18 +39,25 @@ export class CadastroLoginComponent {
       alert('As senhas não coincidem.');
       return;
     }
-
+  
     this.backendService.cadastrarUsuario(this.usuarioCadastro, this.senhaCadastro).subscribe(
       response => {
         console.log('Usuário cadastrado com sucesso:', response);
-        // Lógica adicional após o cadastro, como redirecionamento ou feedback ao usuário
+        // Redireciona para a tela de votação se o cadastro for bem-sucedido (status 201)
+        if (response) {
+          localStorage.setItem('usuarioLogado', response.id);
+          this.router.navigate(['/votacao']);
+        }        
       },
       error => {
-        console.error('Erro ao cadastrar usuário:', error);
-        // Tratamento de erro, exibir mensagem ao usuário, etc.
+        if(error.status === 409){
+          this.usuarioJaCadastrado = true;
+          console.error('Este usuário já está cadastrado', error);
+        }
       }
     );
   }
+  
 
   irParaCadastro() {
     this.exibirCadastro = true;
