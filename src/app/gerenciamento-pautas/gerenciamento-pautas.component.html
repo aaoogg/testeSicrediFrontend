@@ -9,8 +9,12 @@
     <h3>Pauta: {{ pauta.nome }}</h3>
     <p>Votos Sim: {{ pauta.votosSim }}</p>
     <p>Votos Não: {{ pauta.votosNao }}</p>
-    <button class="btn" (click)="iniciarVotacao(pauta.id)" [disabled]="pauta.pautaEmVotacao || pauta.votacaoFinalizada">Iniciar Votação</button>
-    <button class="btn btn-secondary" (click)="encerrarVotacao(pauta.id)" [disabled]="!pauta.pautaEmVotacao">Encerrar Votação</button>
+    <button class="btn" (click)="iniciarVotacao(pauta.id)" [disabled]="pauta.pautaEmVotacao || pauta.votacaoFinalizada">
+      {{ pauta.pautaEmVotacao ? 'Votação Iniciada' : 'Iniciar Votação' }}
+    </button>
+    <button class="btn btn-secondary" (click)="encerrarVotacao(pauta.id)">
+      Encerrar Votação
+    </button>
     <p *ngIf="pauta.votacaoFinalizada" class="alert alert-info">Esta pauta já foi finalizada</p>
   </div>
 </div>

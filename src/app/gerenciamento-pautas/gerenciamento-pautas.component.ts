@@ -11,7 +11,10 @@ export class GerenciamentoPautasComponent {
   newPauta: string = '';
 
   constructor(private backendService: BackendService) {
-    this.buscarPautas();
+  }
+
+  ngOnInit() {
+    this.buscarPautas(); // Chama buscarPautas() ao inicializar o componente
   }
 
   buscarPautas() {
