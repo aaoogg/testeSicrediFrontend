@@ -23,20 +23,24 @@ export class CadastroLoginComponent {
     this.backendService.login(this.usuario, this.senha).subscribe(
       response => {
         console.log('Login realizado com sucesso:', response);
-        //localStorage.setItem('usuarioLogado', response.usuarioId.toString());
-        console.log('Redirecionando para /votacao');
-        this.router.navigate(['/votacao']).then(success => {
-          console.log('Navegação bem-sucedida:', success);
-        }).catch(err => {
-          console.error('Erro na navegação:', err);
-        });
+        if (response && response.id) {
+          localStorage.setItem('usuarioLogado', response.id.toString());
+          console.log('Redirecionando para /votacao');
+          this.router.navigate(['/votacao']).then(success => {
+            console.log('Navegação bem-sucedida:', success);
+          }).catch(err => {
+            console.error('Erro na navegação:', err);
+          });
+        } else {
+          console.error('Erro: Não foi possível obter o usuarioId do response:', response);
+        }
       },
       error => {
         console.error('Erro ao realizar login:', error);
-        // Tratamento de erro, exibir mensagem ao usuário, etc.
       }
     );
   }
+  
 
   cadastrar() {
     if (this.senhaCadastro !== this.confirmarSenha) {
