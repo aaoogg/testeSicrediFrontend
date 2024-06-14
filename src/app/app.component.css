@@ -1,11 +1,10 @@
 /* Exemplo de estilos para o AppComponent */
 .app-container {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    padding: 20px;
-  }
-  
-  h1 {
-    color: #333;
-  }
-  
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+h1 {
+  color: #333;
+}

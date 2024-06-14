@@ -1,3 +1,7 @@
+/**
+ * Author: Antônio Oscar Gehrke
+ */
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -11,7 +15,6 @@ export class BackendService {
 
   constructor(private http: HttpClient) { }
 
-  // Adicionar outros métodos
   getPautas(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/pautas`);
   }
@@ -40,17 +43,17 @@ export class BackendService {
   verificarVoto(idPauta: number): Observable<boolean> {
     return this.http.get<boolean>(`${this.baseUrl}/pautas/${idPauta}/verificarVoto`);
   }
-  
+
   login(usuario: string, senha: string): Observable<any> {
     const body = { usuario, senha };
     return this.http.post<any>(`${this.baseUrl}/usuarios/login`, body);
   }
 
   cadastrarUsuario(usuario: string, senha: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/usuarios/cadastrar`, { usuario, senha }); // Ajusta o endpoint para /api/usuarios
+    return this.http.post<any>(`${this.baseUrl}/usuarios/cadastrar`, { usuario, senha });
   }
 
   buscarUsuario(usuario: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/usuarios/${usuario}`); // Ajusta o endpoint para /api/usuarios/{usuario}
+    return this.http.get<any>(`${this.baseUrl}/usuarios/${usuario}`);
   }
 }

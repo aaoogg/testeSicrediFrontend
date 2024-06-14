@@ -1,3 +1,7 @@
+/**
+ * Author: Antônio Oscar Gehrke
+ */
+
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BackendService } from '../backend.service';
@@ -17,7 +21,7 @@ export class CadastroLoginComponent {
   exibirCadastro: boolean = false;
   usuarioJaCadastrado = false;
 
-  constructor(private router: Router, private backendService: BackendService) {}
+  constructor(private router: Router, private backendService: BackendService) { }
 
   logar() {
     this.backendService.login(this.usuario, this.senha).subscribe(
@@ -40,32 +44,29 @@ export class CadastroLoginComponent {
       }
     );
   }
-  
 
   cadastrar() {
     if (this.senhaCadastro !== this.confirmarSenha) {
       alert('As senhas não coincidem.');
       return;
     }
-  
+
     this.backendService.cadastrarUsuario(this.usuarioCadastro, this.senhaCadastro).subscribe(
       response => {
         console.log('Usuário cadastrado com sucesso:', response);
-        // Redireciona para a tela de votação se o cadastro for bem-sucedido (status 201)
         if (response) {
           localStorage.setItem('usuarioLogado', response.id);
           this.router.navigate(['/votacao']);
-        }        
+        }
       },
       error => {
-        if(error.status === 409){
+        if (error.status === 409) {
           this.usuarioJaCadastrado = true;
           console.error('Este usuário já está cadastrado', error);
         }
       }
     );
   }
-  
 
   irParaCadastro() {
     this.exibirCadastro = true;

@@ -1,3 +1,7 @@
+/**
+ * Author: Antônio Oscar Gehrke
+ */
+
 import { Component } from '@angular/core';
 import { BackendService } from '../backend.service';
 
@@ -14,7 +18,7 @@ export class GerenciamentoPautasComponent {
   }
 
   ngOnInit() {
-    this.buscarPautas(); // Chama buscarPautas() ao inicializar o componente
+    this.buscarPautas();
   }
 
   buscarPautas() {
@@ -32,13 +36,13 @@ export class GerenciamentoPautasComponent {
 
   iniciarVotacao(id: number) {
     this.backendService.iniciarVotacao(id).subscribe(() => {
-      this.buscarPautas(); // Atualizar as pautas após iniciar a votação
+      this.buscarPautas();
     });
   }
 
   encerrarVotacao(id: number) {
     this.backendService.encerrarVotacao(id).subscribe(() => {
-      this.buscarPautas(); // Atualizar as pautas após encerrar a votação
+      this.buscarPautas();
     });
   }
 }

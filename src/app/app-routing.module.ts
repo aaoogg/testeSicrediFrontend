@@ -1,3 +1,7 @@
+/**
+ * Author: Antônio Oscar Gehrke
+ */
+
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SelecaoInicialComponent } from './selecao-inicial/selecao-inicial.component';

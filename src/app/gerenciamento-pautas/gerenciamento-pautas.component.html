@@ -4,7 +4,7 @@
     <input type="text" [(ngModel)]="newPauta" placeholder="Nova Pauta" />
     <button class="btn" (click)="cadastrarPauta()">Cadastrar Pauta</button>
   </div>
-  
+
   <div *ngFor="let pauta of pautas" class="pauta-item">
     <h3>Pauta: {{ pauta.nome }}</h3>
     <p>Votos Sim: {{ pauta.votosSim }}</p>

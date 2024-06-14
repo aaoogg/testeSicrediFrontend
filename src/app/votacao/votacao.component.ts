@@ -1,3 +1,7 @@
+/**
+ * Author: Antônio Oscar Gehrke
+ */
+
 import { Component } from '@angular/core';
 import { BackendService } from '../backend.service';
 
@@ -12,14 +16,14 @@ export class VotacaoComponent {
   votoRegistrado: boolean = false;
   idPautaParaVotar: number = 0;
 
-  constructor(private backendService: BackendService) {}
+  constructor(private backendService: BackendService) { }
 
   buscarPautaById(idPauta: number) {
     this.backendService.getPautaById(idPauta).subscribe(
       response => {
         this.pauta = response;
-        this.mensagem = ''; // Limpa mensagem de erro, se houver
-        this.verificarVoto(); // Verifica se o usuário já votou
+        this.mensagem = '';
+        this.verificarVoto();
       },
       error => {
         this.mensagem = 'Pauta não encontrada';
@@ -29,19 +33,19 @@ export class VotacaoComponent {
   }
 
   votar(voto: boolean) {
-    const usuarioLogado = Number(localStorage.getItem('usuarioLogado')); 
+    const usuarioLogado = Number(localStorage.getItem('usuarioLogado'));
     if (this.pauta && this.pauta.pautaEmVotacao && !this.votoRegistrado) {
       this.backendService.votar(this.pauta.id, voto, usuarioLogado).subscribe(
         () => {
           this.mensagem = 'Voto registrado com sucesso';
           this.verificarVoto();
-          this.votoRegistrado = true; // Marca o voto como registrado localmente
+          this.votoRegistrado = true;
         },
         error => {
           if (error.status === 201) {
             this.mensagem = 'Voto registrado com sucesso';
             this.verificarVoto();
-            this.votoRegistrado = true; // Marca o voto como registrado localmente
+            this.votoRegistrado = true;
           } else {
             console.error('Erro ao registrar voto:', error);
             this.mensagem = 'Erro ao registrar voto';
@@ -52,13 +56,13 @@ export class VotacaoComponent {
       this.mensagem = 'Não é possível votar nesta pauta';
     }
   }
-  
+
 
   verificarVoto() {
     if (this.pauta) {
       this.backendService.verificarVoto(this.pauta.id).subscribe(
         response => {
-          this.votoRegistrado = response; // Se true, o usuário já votou nesta pauta
+          this.votoRegistrado = response;
         },
         error => {
           console.error('Erro ao verificar voto:', error);
