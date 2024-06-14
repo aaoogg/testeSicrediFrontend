@@ -1,14 +1,16 @@
-<div>
+<div class="pauta-container">
   <h2>Gerenciamento de Pautas</h2>
-  <input type="text" [(ngModel)]="newPauta" placeholder="Nova Pauta" />
-  <button (click)="cadastrarPauta()">Cadastrar Pauta</button>
+  <div class="form-group">
+    <input type="text" [(ngModel)]="newPauta" placeholder="Nova Pauta" />
+    <button class="btn" (click)="cadastrarPauta()">Cadastrar Pauta</button>
+  </div>
   
-  <div *ngFor="let pauta of pautas">
+  <div *ngFor="let pauta of pautas" class="pauta-item">
     <h3>Pauta: {{ pauta.nome }}</h3>
     <p>Votos Sim: {{ pauta.votosSim }}</p>
     <p>Votos Não: {{ pauta.votosNao }}</p>
-    <button (click)="iniciarVotacao(pauta.id)" [disabled]="pauta.pautaEmVotacao || pauta.votacaoFinalizada">Iniciar Votação</button>
-    <button (click)="encerrarVotacao(pauta.id)" [disabled]="!pauta.pautaEmVotacao">Encerrar Votação</button>
-    <p *ngIf="pauta.votacaoFinalizada">Esta pauta já foi finalizada</p>
+    <button class="btn" (click)="iniciarVotacao(pauta.id)" [disabled]="pauta.pautaEmVotacao || pauta.votacaoFinalizada">Iniciar Votação</button>
+    <button class="btn btn-secondary" (click)="encerrarVotacao(pauta.id)" [disabled]="!pauta.pautaEmVotacao">Encerrar Votação</button>
+    <p *ngIf="pauta.votacaoFinalizada" class="alert alert-info">Esta pauta já foi finalizada</p>
   </div>
 </div>

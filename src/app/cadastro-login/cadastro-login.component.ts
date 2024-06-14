@@ -23,9 +23,13 @@ export class CadastroLoginComponent {
     this.backendService.login(this.usuario, this.senha).subscribe(
       response => {
         console.log('Login realizado com sucesso:', response);
-        localStorage.setItem('usuarioLogado', response.usuarioId.toString());
-        // Lógica adicional após o login, como redirecionamento ou armazenamento do token de sessão
-        this.router.navigate(['/votacao']); // Exemplo de redirecionamento após login
+        //localStorage.setItem('usuarioLogado', response.usuarioId.toString());
+        console.log('Redirecionando para /votacao');
+        this.router.navigate(['/votacao']).then(success => {
+          console.log('Navegação bem-sucedida:', success);
+        }).catch(err => {
+          console.error('Erro na navegação:', err);
+        });
       },
       error => {
         console.error('Erro ao realizar login:', error);
