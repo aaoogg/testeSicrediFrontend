@@ -16,7 +16,7 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  width: 320px;  /* Increase width to fit input and button */
   margin-bottom: 20px;
   text-align: center;
 }
@@ -27,17 +27,23 @@ body {
   display: block;
 }
 
+.input-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .votacao-container input {
   padding: 10px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-bottom: 10px;
-  width: calc(100% - 22px);
+  margin-right: 10px;
+  flex: 1;
+  min-width: 0; /* Allow input to shrink if needed */
 }
 
 .votacao-container .btn {
-  width: 100%;
   padding: 10px;
   font-size: 16px;
   background-color: #4CAF50;
@@ -45,6 +51,7 @@ body {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  white-space: nowrap; /* Prevent line breaks in the button */
 }
 
 .votacao-container .btn:hover {
@@ -59,9 +66,12 @@ body {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 300px;
   text-align: center;
+  margin-bottom: 20px;
 }
 
-.pauta-container h3 {
+/* Alert Container */
+.alert-container {
+  width: 300px;
   margin-bottom: 20px;
 }
 
@@ -94,11 +104,9 @@ body {
 
 /* Buttons */
 button.btn {
-  width: 100%;
   padding: 10px;
   font-size: 16px;
   background-color: #4CAF50;
-  /* Green color */
   color: white;
   border: none;
   border-radius: 4px;

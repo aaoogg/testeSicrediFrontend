@@ -1,20 +1,25 @@
 <div class="votacao-container">
   <label for="idPautaParaVotar">ID da Pauta:</label>
-  <input type="number" id="idPautaParaVotar" [(ngModel)]="idPautaParaVotar" />
-  <button class="btn" (click)="buscarPautaById(idPautaParaVotar)">Buscar Pauta</button>
+  <div class="input-button-container">
+    <input type="number" id="idPautaParaVotar" [(ngModel)]="idPautaParaVotar" />
+    <button class="btn" (click)="buscarPautaById(idPautaParaVotar)">Buscar Pauta</button>
+  </div>
+</div>
+
+<div *ngIf="mensagem && !pauta" class="pauta-container">
+  <div class="alert alert-danger">{{ mensagem }}</div>
 </div>
 
 <div *ngIf="pauta" class="pauta-container">
   <h3>Pauta: {{ pauta.nome }}</h3>
   <p *ngIf="pauta.pautaEmVotacao && !pauta.votacaoFinalizada" class="alert alert-success">A votação está aberta!</p>
-  <p *ngIf="!pauta.pautaEmVotacao && !pauta.votacaoFinalizada" class="alert alert-warning">A votação ainda não começou.
-  </p>
+  <p *ngIf="!pauta.pautaEmVotacao && !pauta.votacaoFinalizada" class="alert alert-warning">A votação ainda não começou.</p>
   <p *ngIf="pauta.votacaoFinalizada" class="alert alert-danger">A votação foi encerrada.</p>
 
   <div *ngIf="pauta.pautaEmVotacao && !pauta.votacaoFinalizada">
-    <button class="btn" (click)="votar(true)" [disabled]="votoRegistrado">Sim</button>
-    <button class="btn btn-secondary" (click)="votar(false)" [disabled]="votoRegistrado">Não</button>
+    <button class="btn btn-vote" (click)="votar(true)" [disabled]="votoRegistrado">Sim</button>
+    <button class="btn btn-secondary btn-vote" (click)="votar(false)" [disabled]="votoRegistrado">Não</button>
   </div>
 
-  <p *ngIf="mensagem" class="alert alert-info">{{ mensagem }}</p>
+  <p *ngIf="mensagem && pauta" class="alert alert-info">{{ mensagem }}</p>
 </div>

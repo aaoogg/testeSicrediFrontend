@@ -20,6 +20,7 @@ export class CadastroLoginComponent {
   confirmarSenha: string = '';
   exibirCadastro: boolean = false;
   usuarioJaCadastrado = false;
+  mensagemErro: string = '';  // Adicionando a propriedade mensagemErro
 
   constructor(private router: Router, private backendService: BackendService) { }
 
@@ -37,10 +38,16 @@ export class CadastroLoginComponent {
           });
         } else {
           console.error('Erro: Não foi possível obter o usuarioId do response:', response);
+          this.mensagemErro = 'Erro no servidor. Tente novamente mais tarde.';  // Definindo a mensagem de erro
         }
       },
       error => {
         console.error('Erro ao realizar login:', error);
+        if (error.status === 401) {
+          this.mensagemErro = 'Usuário ou senha incorretos.';
+        } else {
+          this.mensagemErro = 'Erro no servidor. Tente novamente mais tarde.';
+        }
       }
     );
   }

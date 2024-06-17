@@ -26,7 +26,7 @@ export class VotacaoComponent {
         this.verificarVoto();
       },
       error => {
-        this.mensagem = 'Pauta não encontrada';
+        this.mensagem = 'Pauta com ID ' + idPauta + ' não foi localizada.';
         this.pauta = null;
       }
     );

@@ -1,20 +1,33 @@
 <div class="pauta-container">
   <h2>Gerenciamento de Pautas</h2>
   <div class="form-group">
-    <input type="text" [(ngModel)]="newPauta" placeholder="Nova Pauta" />
-    <button class="btn" (click)="cadastrarPauta()">Cadastrar Pauta</button>
+    <input type="text" [(ngModel)]="newPauta" placeholder="Nova Pauta" class="form-control" />
+    <button class="btn2" (click)="cadastrarPauta()">Cadastrar Pauta</button>
   </div>
 
   <div *ngFor="let pauta of pautas" class="pauta-item">
     <h3>Pauta: {{ pauta.nome }}</h3>
     <p>Votos Sim: {{ pauta.votosSim }}</p>
     <p>Votos Não: {{ pauta.votosNao }}</p>
-    <button class="btn" (click)="iniciarVotacao(pauta.id)" [disabled]="pauta.pautaEmVotacao || pauta.votacaoFinalizada">
+    <div>
+      <label>
+        <input type="checkbox" [(ngModel)]="pauta.usarTempoPadrao" (change)="onCheckboxChange(pauta)">
+        Usar tempo padrão (60 segundos)
+      </label>
+      <br>
+      <label for="tempoVotacao">Tempo de Votação (minutos): </label>
+      <input type="number" id="tempoVotacao" [(ngModel)]="pauta.tempoVotacao" min="1" step="1" [disabled]="pauta.usarTempoPadrao" required>
+    </div>
+    <button class="btn" (click)="iniciarVotacao(pauta.id, pauta.tempoVotacao)" [disabled]="pauta.pautaEmVotacao || pauta.votacaoFinalizada || (pauta.usarTempoPadrao && pauta.pautaEmVotacao)">
       {{ pauta.pautaEmVotacao ? 'Votação Iniciada' : 'Iniciar Votação' }}
     </button>
     <button class="btn btn-secondary" (click)="encerrarVotacao(pauta.id)">
       Encerrar Votação
     </button>
+    <p *ngIf="pauta.pautaEmVotacao && pauta.contador > 0" class="alert alert-info">
+      Votação Iniciada. Tempo restante: {{ pauta.contador }} segundos.
+    </p>
     <p *ngIf="pauta.votacaoFinalizada" class="alert alert-info">Esta pauta já foi finalizada</p>
+    <p *ngIf="pauta.mensagem">{{ pauta.mensagem }}</p>
   </div>
 </div>

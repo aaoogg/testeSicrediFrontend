@@ -9,6 +9,9 @@
   </div>
   <button class="btn" (click)="logar()">Logar</button>
   <button class="btn btn-secondary" (click)="irParaCadastro()">Cadastrar Votante</button>
+  <div *ngIf="mensagemErro" class="alert alert-danger">
+    {{ mensagemErro }}
+  </div>
 </div>
 
 <!-- Para cadastro -->

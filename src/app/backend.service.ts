@@ -32,8 +32,8 @@ export class BackendService {
     return this.http.post<any>(`${this.baseUrl}/pautas`, { nome });
   }
 
-  iniciarVotacao(id: number): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/pautas/${id}/iniciar-votacao`, {});
+  iniciarVotacao(id: number, tempoVotacao: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/pautas/${id}/iniciar-votacao`, { tempoVotacao });
   }
 
   encerrarVotacao(id: number): Observable<void> {
